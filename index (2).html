@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Formulário Oficial - Família PkB</title>
+<style>
+/* ========== ESTILO BASE ========== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+:root {
+  --bg1: #0d0d0d;
+  --bg2: #1a1a1a;
+  --text: #e6e6e6;
+  --brand: #d4af37;
+  --brand-2: #b59125;
+  --warn: #e74c3c;
+  --muted: #aaa;
+  --card: #141414;
+  --chip: #222;
+  --soft: #333;
+  --shadow: rgba(0, 0, 0, 0.35);
+}
+body {
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, var(--bg1), var(--bg2));
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px 15px;
+  overflow-x: hidden;
+}
+
+/* ========== CABEÇALHO ========== */
+header {
+  text-align: center;
+  margin-bottom: 25px;
+  animation: fadeInDown 0.8s ease;
+}
+header h1 {
+  font-size: 2.6rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #d4af37, #fff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+header p {
+  font-size: 1rem;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+/* ========== CONTAINER ========== */
+.container {
+  background: var(--card);
+  border-radius: 20px;
+  box-shadow: 0 6px 20px var(--shadow);
+  max-width: 680px;
+  width: 100%;
+  padding: 25px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: fadeInUp 0.9s ease;
+}
+
+/* ========== CARDS ========== */
+.card {
+  background: var(--chip);
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: 0 3px 8px rgba(0,0,0,.35);
+  transition: all .3s ease;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+.card-title {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+.card-toggle { opacity: .7; }
+.card-content { margin-top: 12px; display: none; }
+.card.open .card-content { display: block; }
+
+/* ========== INPUTS ========== */
+label { display:block; font-weight: 600; margin-top: 10px; }
+input, textarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 6px;
+  border-radius: 10px;
+  border: 1.5px solid #444;
+  background: #0d0d0d;
+  color: var(--text);
+  font-size: 1rem;
+}
+input:focus, textarea:focus {
+  border-color: var(--brand);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(212,175,55,0.25);
+}
+
+/* Chips (botões de escolha) */
+.radio-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.chip input { display:none; }
+.chip label {
+  background: #1e1e1e;
+  padding: 8px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all .2s ease;
+  font-weight: 600;
+  border: 1.5px solid #333;
+}
+.chip input:checked + label {
+  background: var(--brand);
+  color: #000;
+}
+
+/* ========== BOTÕES ========== */
+.btn {
+  border: none;
+  border-radius: 14px;
+  padding: 14px 0;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btn-primary {
+  background: var(--brand);
+  color: #000;
+  box-shadow: 0 4px 12px rgba(212,175,55,0.3);
+}
+.btn-primary:hover { filter: brightness(1.1); }
+.btn-copy {
+  background: var(--brand-2);
+  color: #000;
+  display: none;
+  margin-top: 10px;
+}
+
+/* ========== RESULTADO ========== */
+pre.result {
+  margin-top: 14px;
+  background: #111;
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid #333;
+  white-space: pre-wrap;
+  font-family: monospace;
+  font-size: 0.95rem;
+  display: none;
+}
+
+/* ========== PROGRESS BAR ========== */
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #333;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.progress {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--brand), var(--brand-2));
+  transition: width .3s ease;
+}
+
+/* ========== FOOTER ========== */
+footer {
+  margin-top: 28px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* ========== ANIMAÇÕES ========== */
+@keyframes fadeInDown {
+  from {opacity:0; transform:translateY(-15px)}
+  to {opacity:1; transform:translateY(0)}
+}
+@keyframes fadeInUp {
+  from {opacity:0; transform:translateY(15px)}
+  to {opacity:1; transform:translateY(0)}
+}
+
+/* ========== RESPONSIVIDADE ========== */
+@media(max-width:640px){
+  header h1{font-size:2rem;}
+  .btn{font-size:1rem;}
+}
+
+/* ========== BOTÃO YOUTUBE ========== */
+.yt-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--brand);
+  color: #000;
+  padding: 14px 20px;
+  border-radius: 999px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(212,175,55,0.35);
+  text-decoration: none;
+  transition: .3s;
+}
+.yt-btn:hover { filter: brightness(1.1); transform: scale(1.03); }
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Formulário Família PkB</h1>
+  <p>Cadastre-se e mostre o que tem pra somar na família 👑</p>
+</header>
+
+<div class="progress-bar"><div id="progress" class="progress"></div></div>
+
+<div class="container" id="container">
+  
+  <!-- SEÇÃO 1 -->
+  <section class="card open">
+    <div class="card-header" data-toggle>
+      <div class="card-title">🧾 Informações Básicas</div><div class="card-toggle">➖</div>
+    </div>
+    <div class="card-content">
+      <label>🧑 Idade:</label>
+      <input type="number" id="age" min="10" max="120" placeholder="Ex: 18">
+      
+      <label>📛 Apelido / Nome no jogo:</label>
+      <input type="text" id="preferredName" placeholder="Ex: Melcky">
+      
+      <label>🧲 Nome do recrutador:</label>
+      <input type="text" id="recruiter" placeholder="Quem te indicou">
+    </div>
+  </section>
+
+  <!-- SEÇÃO 2 -->
+  <section class="card">
+    <div class="card-header" data-toggle>
+      <div class="card-title">⚙️ Função na Família</div><div class="card-toggle">➕</div>
+    </div>
+    <div class="card-content">
+      <label>🎯 Escolha sua função:</label>
+      <div class="radio-group">
+        <div class="chip"><input type="radio" name="role" id="defensor" value="🛡️ Defensor"><label for="defensor">🛡️ Defensor <small>(Protege e mantém a ordem)</small></label></div>
+        <div class="chip"><input type="radio" name="role" id="recrutador" value="🎯 Recrutador"><label for="recrutador">🎯 Recrutador <small>(Traz novos membros)</small></label></div>
+        <div class="chip"><input type="radio" name="role" id="conselheiro" value="🧠 Conselheiro"><label for="conselheiro">🧠 Conselheiro <small>(Ajuda e orienta membros)</small></label></div>
+        <div class="chip"><input type="radio" name="role" id="carisma" value="🧲 Carisma"><label for="carisma">🧲 Carisma <small>(Espalha energia e união)</small></label></div>
+        <div class="chip"><input type="radio" name="role" id="divulgador" value="📢 Divulgador"><label for="divulgador">📢 Divulgador <small>(Divulga e representa a família)</small></label></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 3 -->
+  <section class="card">
+    <div class="card-header" data-toggle>
+      <div class="card-title">⏰ Atividade & Experiência</div><div class="card-toggle">➕</div>
+    </div>
+    <div class="card-content">
+      <label>📊 Nível de atividade:</label>
+      <div class="radio-group">
+        <div class="chip"><input type="radio" name="activityLevel" id="baixo" value="Baixo"><label for="baixo">Baixo</label></div>
+        <div class="chip"><input type="radio" name="activityLevel" id="medio" value="Médio"><label for="medio">Médio</label></div>
+        <div class="chip"><input type="radio" name="activityLevel" id="alto" value="Alto"><label for="alto">Alto</label></div>
+      </div>
+
+      <label>🕓 Horário mais ativo:</label>
+      <div class="radio-group">
+        <div class="chip"><input type="radio" name="activeHours" id="manha" value="Manhã"><label for="manha">Manhã</label></div>
+        <div class="chip"><input type="radio" name="activeHours" id="tarde" value="Tarde"><label for="tarde">Tarde</label></div>
+        <div class="chip"><input type="radio" name="activeHours" id="noite" value="Noite"><label for="noite">Noite</label></div>
+        <div class="chip"><input type="radio" name="activeHours" id="madrugada" value="Madrugada"><label for="madrugada">Madrugada</label></div>
+      </div>
+
+      <label>🎮 Tempo jogando:</label>
+      <input type="text" id="timePlaying" placeholder="Ex: 2 anos">
+
+      <label>👥 Já participou de outras famílias?</label>
+      <textarea id="previousFamily" rows="2" placeholder="Escreva aqui..."></textarea>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 4 -->
+  <section class="card">
+    <div class="card-header" data-toggle>
+      <div class="card-title">💬 Informações Extras</div><div class="card-toggle">➕</div>
+    </div>
+    <div class="card-content">
+      <label>⚡ Pontos fortes:</label>
+      <textarea id="strengths" rows="2" placeholder="Ex: Comunicação, liderança..."></textarea>
+
+      <label>🎯 Objetivo na família:</label>
+      <textarea id="goal" rows="2" placeholder="O que quer alcançar aqui?"></textarea>
+    </div>
+  </section>
+
+  <button id="finalizeBtn" class="btn btn-primary" type="button">Finalizar e Mostrar Resultado</button>
+  <button id="copyBtn" class="btn btn-copy" type="button">📋 Copiar Formulário</button>
+
+  <pre id="resultText" class="result"></pre>
+</div>
+
+<footer>© 2025 Família ElMelcky. Todos os direitos reservados.</footer>
+
+<!-- BOTÃO YOUTUBE -->
+<a href="https://www.youtube.com/@ElMelcky" target="_blank" class="yt-btn">📺 Canal ElMelcky</a>
+
+<script>
+const fields = {
+  age: document.getElementById('age'),
+  recruiter: document.getElementById('recruiter'),
+  preferredName: document.getElementById('preferredName'),
+  previousFamily: document.getElementById('previousFamily'),
+  timePlaying: document.getElementById('timePlaying'),
+  strengths: document.getElementById('strengths'),
+  goal: document.getElementById('goal'),
+};
+const radios = ['role','activityLevel','activeHours'];
+const resultText = document.getElementById('resultText');
+const copyBtn = document.getElementById('copyBtn');
+const progressEl = document.getElementById('progress');
+
+function getRadioValue(name){
+  const radiosEl = document.getElementsByName(name);
+  for(let r of radiosEl) if(r.checked) return r.value;
+  return '';
+}
+function readData(){
+  return {
+    age: fields.age.value,
+    recruiter: fields.recruiter.value,
+    preferredName: fields.preferredName.value,
+    role: getRadioValue('role'),
+    activityLevel: getRadioValue('activityLevel'),
+    activeHours: getRadioValue('activeHours'),
+    timePlaying: fields.timePlaying.value,
+    previousFamily: fields.previousFamily.value,
+    strengths: fields.strengths.value,
+    goal: fields.goal.value
+  };
+}
+function buildText(data){
+  return `📜 Formulário Família ElMelcky ━━━━━━━━━━━━━━━━
+1 Idade: ${data.age || '___'}
+2 Apelido: ${data.preferredName || '___'}
+3 Recrutador: ${data.recruiter || '___'}
+4 Função: ${data.role || '___'}
+5 Atividade: ${data.activityLevel || '___'}
+6 Horário: ${data.activeHours || '___'}
+7 Tempo jogando: ${data.timePlaying || '___'}
+8 Outras famílias: ${data.previousFamily || '___'}
+9 Pontos fortes: ${data.strengths || '___'}
+10 Objetivo: ${data.goal || '___'}
+━━━━━━━━━━━━━━━━━━━━━━
+(Enviado via site 👑)`;
+}
+
+function update(){
+  const d = readData();
+  resultText.textContent = buildText(d);
+  resultText.style.display = 'block';
+  copyBtn.style.display = 'inline-block';
+  updateProgress();
+}
+function updateProgress(){
+  const filled = [
+    fields.age.value, fields.recruiter.value, fields.preferredName.value,
+    getRadioValue('role'), getRadioValue('activityLevel'), getRadioValue('activeHours')
+  ].filter(Boolean).length;
+  const pct = Math.round((filled/6)*100);
+  progressEl.style.width = pct + '%';
+}
+Object.values(fields).forEach(el=>el.addEventListener('input', update));
+radios.forEach(name=>document.getElementsByName(name).forEach(r=>r.addEventListener('change', update)));
+document.getElementById('finalizeBtn').addEventListener('click', update);
+copyBtn.addEventListener('click',()=>{
+  navigator.clipboard.writeText(resultText.textContent);
+  copyBtn.textContent='✅ Copiado!';
+  setTimeout(()=>copyBtn.textContent='📋 Copiar Formulário',1800);
+});
+document.querySelectorAll('[data-toggle]').forEach(h=>{
+  h.addEventListener('click',()=>{
+    const c = h.closest('.card');
+    const t = h.querySelector('.card-toggle');
+    const open = c.classList.toggle('open');
+    t.textContent=open?'➖':'➕';
+  });
+});
+update();
+</script>
+</body>
+</html>
